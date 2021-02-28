@@ -1,34 +1,7 @@
-// import React, { useRef, useState, useMemo, useEffect } from 'react';
-// import { Canvas, useFrame } from "react-three-fiber";
-// import * as THREE from 'three';
-// import { css } from '@emotion/css';
-
-
-// const Index = () => {
-
-//     useEffect(() => {
-//         const scene = new THREE.Scene();
-//             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-//             const renderer = new THREE.WebGLRenderer();
-//             renderer.setSize(window.innerWidth, window.innerHeight);
-//             document.body.appendChild(renderer.domElement);
-
-
-//     }, []);
-
-//     return (
-//         <>
-//         </>
-//     )
-// };
-
-// export default Index;
-
-
 import React, { useRef, useState, useMemo } from 'react';
 import { Canvas, useFrame } from "react-three-fiber";
 import * as THREE from 'three';
-import five from '../src/assets/five.png';
+import five from '../assets/five.png';
 import { css } from '@emotion/css';
 
 const style = css`

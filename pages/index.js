@@ -1,76 +1,41 @@
-// import React, { useRef, useState, useMemo, useEffect } from 'react';
-// import { Canvas, useFrame } from "react-three-fiber";
-// import * as THREE from 'three';
-// import { css } from '@emotion/css';
-
-
-// const Index = () => {
-
-//     useEffect(() => {
-//         const scene = new THREE.Scene();
-//             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-//             const renderer = new THREE.WebGLRenderer();
-//             renderer.setSize(window.innerWidth, window.innerHeight);
-//             document.body.appendChild(renderer.domElement);
-
-
-//     }, []);
-
-//     return (
-//         <>
-//         </>
-//     )
-// };
-
-// export default Index;
-
-
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState, useMemo, useEffect } from 'react';
 import { Canvas, useFrame } from "react-three-fiber";
 import * as THREE from 'three';
-import five from '../src/assets/five.png';
 import { css } from '@emotion/css';
 
-const style = css`
-    background-color: black;
-`;
-
-const Box = (props) => {
-    const mesh = useRef();
-
-    const [active, setActive] = useState(false);
-
-    useFrame(() => {
-        mesh.current.rotation.x = mesh.current.rotation.y += 0.03;
-
-    });
-
-    const texture = useMemo(() => new THREE.TextureLoader().load(five), [])
-
-    return (
-        <mesh
-            {...props}
-            ref={mesh}
-            scale={active ? [5, 5, 5] : [3, 3, 3]}
-            onClick={(e) => setActive(!active)}
-        >
-            <boxBufferGeometry args={[1, 1, 1]} />
-            <meshBasicMaterial attach="material" transparent side={THREE.DoubleSide}>
-                <primitive attach="map" object={texture} />
-            </meshBasicMaterial>
-        </mesh>
-    )
-}
 
 const Index = () => {
-    return (
-        <Canvas className={style}>
-            <ambientLight intensity={0.5} />
-            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-            <pointLight position={[-10, -10, -10]} />
-            <Box position={[0, 0, 0]} />
-        </Canvas>
-    )
+
+    useEffect(() => {
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild( renderer.domElement );
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500);
+        camera.position.set(0, 0, 200);
+        camera.lookAt(0, 0, 0);
+        const scene = new THREE.Scene();
+
+        const points = [];
+        points.push( new THREE.Vector3( - 10, 0, 0 ) );
+        points.push( new THREE.Vector3( 0, 10, 0 ) );
+        points.push( new THREE.Vector3( 10, 0, 0 ) );
+        const geometry = new THREE.BufferGeometry().setFromPoints( points );
+        const material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+        const line = new THREE.Line( geometry, material );
+        scene.add( line );
+        renderer.render( scene, camera );
+
+        const animate = () => {
+            requestAnimationFrame( animate );
+            line.rotation.y += 0.01;
+            line.rotation.x += 0.01;
+            renderer.render( scene, camera );
+        }
+        animate();
+    }, []);
+
+    return <></>
 };
 
 export default Index;

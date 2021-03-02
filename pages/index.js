@@ -20,16 +20,25 @@ const Index = () => {
         points.push( new THREE.Vector3( - 10, 0, 0 ) );
         points.push( new THREE.Vector3( 0, 10, 0 ) );
         points.push( new THREE.Vector3( 10, 0, 0 ) );
-        const geometry = new THREE.BufferGeometry().setFromPoints( points );
-        const material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
-        const line = new THREE.Line( geometry, material );
-        scene.add( line );
+        const lineGeometry = new THREE.BufferGeometry().setFromPoints( points );
+        const lineMaterial = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+        const line = new THREE.Line( lineGeometry, lineMaterial );
+    
+        const boxGeometry = new THREE.BoxGeometry(5, 5, 5);
+        const boxMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+        const cube = new THREE.Mesh(boxGeometry, boxMaterial);
+        
+        const object = new THREE.Object3D(5, 5, 5);
+        scene.add(object);
+        // scene.add( line, cube );
         renderer.render( scene, camera );
 
         const animate = () => {
             requestAnimationFrame( animate );
             line.rotation.y += 0.01;
             line.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            cube.rotation.x += 0.01;
             renderer.render( scene, camera );
         }
         animate();
